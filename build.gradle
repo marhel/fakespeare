@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'scala'
+    id "com.github.maiflai.scalatest" version "0.18"
+}
+
+group 'com.factor10'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+    maven {
+        url "https://dl.bintray.com/websudos/oss-releases"
+    }
+    maven {
+        url "https://outworkers.bintray.com/oss-releases"
+    }
+    maven {
+        url "http://repo.typesafe.com/typesafe/maven-releases"
+    }
+    maven {
+        url "https://maven.elasticsearch.org/releases/"
+    }
+}
+
+dependencies {
+    compile 'org.scala-lang:scala-library:2.12.4'
+
+    testCompile 'org.scalatest:scalatest_2.12:3.0.4'
+    testRuntime 'org.pegdown:pegdown:1.6.0'
+}
+
+task run(type: JavaExec) {
+    if (project.hasProperty("appArgs")) {
+        args Eval.me(appArgs)
+    }
+    main = "fakespeare.ShakespearePlay"
+    classpath = sourceSets.main.runtimeClasspath
+}
