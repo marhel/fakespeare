@@ -1,5 +1,7 @@
 package fakespeare
 
+import fakespeare.Statistics.toChain
+
 // feature: singleton object / static methods
 // feature: companion object
 object ShakespearePlay {
@@ -25,9 +27,27 @@ object ShakespearePlay {
     }
   }
 
+  def extractWords(shakespearePlay: ShakespearePlay): List[String] = {
+    print(describe(shakespearePlay.play))
+    println(" (%s words)".format(shakespearePlay.words.size))
+    shakespearePlay.words
+  }
+
+  def process(word: String, plays: Seq[String]) = {
+    val allWords = plays.map(interpret).flatMap(extractWords)
+    val chain = toChain(allWords)
+    println
+    println("Generating Fakespeare sequence based on %s words".format(allWords.size))
+    println
+    println(chain.walk(word, 200))
+  }
+
   def main(args: Array[String]): Unit = {
     println("Fakespeare")
-    args.map(interpret).map(sp => describe(sp.play)).foreach(println)
+    args.toList match {
+      case word :: plays => process(word, plays)
+      case _ => process("THIS", ShakespearePlay.well_known)
+    }
   }
 }
 
