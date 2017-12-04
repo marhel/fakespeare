@@ -1,6 +1,6 @@
 package fakespeare
 
-import fakespeare.Statistics.toChain
+import fakespeare.Statistics.{toChain, top}
 
 // feature: singleton object / static methods
 // feature: companion object
@@ -42,11 +42,17 @@ object ShakespearePlay {
     println(chain.walk(word, 200))
   }
 
+  val commonStartWords = List("A", "AND", "AY", "BUT", "COME", "DO", "GOOD", "HE",
+    "HERE", "HOW", "I", "I'LL", "IF", "IN", "IS", "IT", "LET", "MY", "NAY", "NO",
+    "NOT", "NOW", "O", "SHE", "SIR", "SO", "THAT", "THE", "THEN", "THIS", "THOU",
+    "TO", "WE", "WELL", "WHAT", "WHERE", "WHY", "YOU")
+
   def main(args: Array[String]): Unit = {
+    val random = new scala.util.Random
     println("Fakespeare")
     args.toList match {
       case word :: plays => process(word, plays)
-      case _ => process("THIS", ShakespearePlay.well_known)
+      case _ => process(random.shuffle(commonStartWords).head, ShakespearePlay.well_known)
     }
   }
 }
