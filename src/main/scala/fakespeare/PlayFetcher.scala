@@ -18,7 +18,11 @@ object PlayFetcher {
     } else {
       // feature: nested method definition
       def writeToCache(lines: List[String], cacheFilePath: Path) = {
-        Files.write(cacheFilePath, lines.mkString("\n").getBytes(StandardCharsets.UTF_8), StandardOpenOption.CREATE_NEW)
+        try {
+          Files.write(cacheFilePath, lines.mkString("\n").getBytes(StandardCharsets.UTF_8), StandardOpenOption.CREATE_NEW)
+        } catch {
+          case ex: Throwable => println("Could not write to " + cacheFilePath + " due to " + ex)
+        }
       }
 
       val lines: List[String] = fetchOnline(playSlug)
