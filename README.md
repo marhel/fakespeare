@@ -4,7 +4,7 @@ I was asked to hold a presentation on the Scala programming language, and came u
 
 It is a parser of the full-text of [online Shakespeare plays](http://shakespeare.mit.edu/index.html) and a simple Markov chain based generator of fake Shakespeare quotes. Hence "Fakespeare".
 
-At the moment, the only way to see the fake quotes is executing the src/Experiment.sc worksheet.
+There are some sample generated text below. To generate your own texts, do a `gradle run`.
 
 ## Build, test and run
 
