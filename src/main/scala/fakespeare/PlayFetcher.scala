@@ -9,8 +9,8 @@ object PlayFetcher {
 
   import HtmlParser._
 
-  def read(play: String): List[String] = {
-    val cacheFilePath = Paths.get("plays", s"$play.play.txt")
+  def read(playSlug: String): List[String] = {
+    val cacheFilePath = Paths.get("plays", s"$playSlug.play.txt")
 
     // feature: last evaluated expression is the return value (if-expression)
     if (Files.exists(cacheFilePath)) {
@@ -21,15 +21,16 @@ object PlayFetcher {
         Files.write(cacheFilePath, lines.mkString("\n").getBytes(StandardCharsets.UTF_8), StandardOpenOption.CREATE_NEW)
       }
 
-      val lines: List[String] = fetchOnline(play)
+      val lines: List[String] = fetchOnline(playSlug)
       writeToCache(lines, cacheFilePath)
       lines
     }
   }
 
-  def fetchOnline(play: String) = {
+  def fetchOnline(playSlug: String) = {
     // feature: string interpolation
-    val playUrl = s"http://shakespeare.mit.edu/$play/full.html"
+    // See http://shakespeare.mit.edu/index.html for more plays
+    val playUrl = s"http://shakespeare.mit.edu/$playSlug/full.html"
     io.Source.fromURL(playUrl).getLines().toList
       .filterNot(tagsOnly)
       .filterNot(_.trim.isEmpty)
