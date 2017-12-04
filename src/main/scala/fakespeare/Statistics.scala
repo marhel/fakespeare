@@ -11,7 +11,7 @@ object Statistics {
   // feature: multiple parameter lists
   def top(n: Int)(gen: => Map[String, Int]): List[String] = gen.toList.sortBy(_._2).reverse.take(n).map(_._1)
 
-  def toChain(words: List[String]): MarkovChain = new MarkovChain(
+  def toChain(words: Seq[String]): MarkovChain = new MarkovChain(
     // feature: excessivly long expressions are safe, though maybe not extremely readable
     words.sliding(2).toList
       .map(w => (w.head, w.last))
@@ -42,7 +42,7 @@ class MarkovChain(val chain: Map[String, Map[String, Int]]) {
   // feature: recursion
   // feature: default parameter value
   def walk(word: String, depth: Int = 15): String = {
-    chain.get(word).flatMap(pickWord).map { nextWord =>
+    chain.get(word.toUpperCase).flatMap(pickWord).map { nextWord =>
       if (depth > 0)
         word + " " + walk(nextWord, depth - 1)
       else
