@@ -43,7 +43,7 @@ was followed by another word a total of 3394 times.
 
 This means the probability of generating the sequence "I HAD" using this chain
 is 71/3394 (about 2%), "I AM" is 342/3394 (about 10%) and "I PRONOUNCE" 1/3394
-(about 0.3%). When we have selected the next word, we simply repeat the
+(about 0.03%). When we have selected the next word, we simply repeat the
 process, using that word as an entry to find a word to follow that.
 
 Let's say we picked "AM", then we fetch the entry for "AM", which is:
